@@ -36,4 +36,4 @@ users[] = B20000005 12345678F@
 
 ### Click  `set_task.bat`
 
-Now it works when change the network and restart the computer.
+Now it works when changing the network and restarting the computer.

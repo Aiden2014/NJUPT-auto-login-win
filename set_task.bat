@@ -1,4 +1,9 @@
 @echo off
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    powershell -Command "Start-Process cmd -ArgumentList '/c \"%~f0\"' -Verb RunAs"
+    exit /b
+)
 setlocal
 
 set script_dir=%~dp0
@@ -8,8 +13,14 @@ echo ^<?xml version="1.0" encoding="UTF-16"?^> > "%~dp0task.xml"
 echo ^<Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task"^> >> "%~dp0task.xml"
 echo   ^<RegistrationInfo^> >> "%~dp0task.xml"
 echo     ^<Author^>Aiden^</Author^> >> "%~dp0task.xml"
-echo     ^<URI^>\auto_connect_njupt^</URI^> >> "%~dp0task.xml"
+echo     ^<URI^>\AutoConnectNjupt^</URI^> >> "%~dp0task.xml"
 echo   ^</RegistrationInfo^> >> "%~dp0task.xml"
+echo   ^<Principals^> >> "%~dp0task.xml"
+echo     ^<Principal id="Author"^> >> "%~dp0task.xml"
+echo       ^<LogonType^>InteractiveToken^</LogonType^> >> "%~dp0task.xml"
+echo       ^<RunLevel^>HighestAvailable^</RunLevel^> >> "%~dp0task.xml"
+echo     ^</Principal^> >> "%~dp0task.xml"
+echo   ^</Principals^> >> "%~dp0task.xml"
 echo   ^<Triggers^> >> "%~dp0task.xml"
 echo     ^<EventTrigger^> >> "%~dp0task.xml"
 echo       ^<Enabled^>true^</Enabled^> >> "%~dp0task.xml"
@@ -19,7 +30,7 @@ echo   ^</Triggers^> >> "%~dp0task.xml"
 echo   ^<Settings^> >> "%~dp0task.xml"
 echo     ^<MultipleInstancesPolicy^>IgnoreNew^</MultipleInstancesPolicy^> >> "%~dp0task.xml"
 echo     ^<DisallowStartIfOnBatteries^>false^</DisallowStartIfOnBatteries^> >> "%~dp0task.xml"
-echo     ^<StopIfGoingOnBatteries^>true^</StopIfGoingOnBatteries^> >> "%~dp0task.xml"
+echo     ^<StopIfGoingOnBatteries^>false^</StopIfGoingOnBatteries^> >> "%~dp0task.xml"
 echo     ^<AllowHardTerminate^>true^</AllowHardTerminate^> >> "%~dp0task.xml"
 echo     ^<StartWhenAvailable^>false^</StartWhenAvailable^> >> "%~dp0task.xml"
 echo     ^<RunOnlyIfNetworkAvailable^>false^</RunOnlyIfNetworkAvailable^> >> "%~dp0task.xml"

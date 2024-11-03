@@ -14,7 +14,13 @@ for /f "tokens=* delims= " %%A in ("%wifi_name%") do (
     set "wifi_name=%%A"
 )
 
-if "%wifi_name%" neq "NJUPT" if "%wifi_name%" neq "NJUPT-CMCC" if "%wifi_name%" neq "NJUPT-CHINANET" exit
+if "%wifi_name%" neq "NJUPT" if "%wifi_name%" neq "NJUPT-CMCC" if "%wifi_name%" neq "NJUPT-CHINANET" (
+    set key=HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet
+    REG ADD %key% /v EnableActiveProbing /d 1 /f /t REG_DWORD
+    timeout /t 10
+    REG ADD %key% /v EnableActiveProbing /d 0 /f /t REG_DWORD
+    exit
+)
 
 set "wifi_name=[%wifi_name%]"
 set in_session=0
@@ -48,4 +54,3 @@ for /f "tokens=1,* delims=" %%A in (%config_path%) do (
 
 echo login fail, please check your config format, username and password
 pause
-

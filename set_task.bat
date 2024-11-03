@@ -62,4 +62,6 @@ schtasks /create /f /tn %task_name% /xml "%~dp0task.xml"
 
 del /f /q "%~dp0task.xml"
 
+REG ADD HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet /v EnableActiveProbing /d 0 /f /t REG_DWORD
+
 endlocal

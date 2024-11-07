@@ -4,6 +4,8 @@
 
 It is a batch script to auto login njupt network when connecting the njupt wifi.
 
+![demo](./demo.webp)
+
 ## Feature
 
 - Windows friendly
